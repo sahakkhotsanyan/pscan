@@ -1,0 +1,49 @@
+#! /bin/php
+<?php
+if(isset($_SERVER['argv'][1]) and isset($_SERVER['argv'][2]) and isset($_SERVER['argv'][3])){
+	$host = $_SERVER[ 'argv' ][1];
+	$startport = $_SERVER[ 'argv' ][2];
+	$endport = $_SERVER[ 'argv' ][3];
+	for($port = $startport; $port < $endport; $port++){
+		$connection = @fsockopen($host, $port);
+		if (is_resource($connection))
+		{
+			echo $host.':'.$port.' '.'('.getservbyport($port, 'tcp').') is open'."\n";
+			fclose($connection);
+		}
+		else
+		{
+			echo $host.':'.$port.' Not response'."\n";
+		}
+	}
+}
+else if(isset($_SERVER['argv'][1]) and isset($_SERVER['argv'][2])){
+	$host = $_SERVER[ 'argv' ][1];
+	$port = $_SERVER[ 'argv' ][2];
+	$connection = @fsockopen($host, $port);
+	if (is_resource($connection))
+	{
+		echo $host.':'.$port.' '.'('.getservbyport($port, 'tcp').') is open'."\n";
+		fclose($connection);
+	}
+	else
+	{
+		echo $host.':'.$port.' Not response'."\n";
+	}
+}
+else if(!isset($_SERVER['argv'][1])) echo "Maked by Sahak Khotsanyan\nRun pscan -h for help\n";
+else if(isset($_SERVER['argv'][1]) and !isset($_SERVER['argv'][2])){
+	if($_SERVER['argv'][1] == "-h"){
+echo '
+		Maked By Sahak Khotsanyan
+		Usage:
+		pscan ip port			scan port is open or no
+		pscan ip startport endport 	scan ports in port range is open or no
+		pscan -U 			for update programm
+';
+	}
+	else if ($_SERVER['argv'][1] == "-U"){
+		system("sudo cp /bin/pscan /bin/pscanold && sudo curl -o /bin/pscan url && sudo rm /bin/pscanold");
+	}
+}
+?>
