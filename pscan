@@ -43,7 +43,7 @@ echo '
 ';
 	}
 	else if ($_SERVER['argv'][1] == "-U"){
-		system("sudo cp /bin/pscan /bin/pscanold && sudo curl -o /bin/pscan url && sudo rm /bin/pscanold");
+		system("sudo cp /bin/pscan /bin/pscanold && sudo curl -o /bin/pscan https://raw.githubusercontent.com/sahakkhotsanyan/pscan/master/pscan && sudo rm /bin/pscanold");
 	}
 }
 ?>
